@@ -38,7 +38,7 @@ h1 { font-size: clamp(46px, 7.2vw, 92px); line-height: .9; letter-spacing: -.075
 .miniStats div { border: 1px solid var(--line); background: rgba(255,255,255,.05); padding: 13px 15px; border-radius: 18px; min-width: 130px; }
 .miniStats b, .miniStats span { display: block; }
 .miniStats span { color: var(--muted); font-size: 13px; margin-top: 4px; }
-.terminalCard, .panel, .step, .riskItem { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); border: 1px solid var(--line); border-radius: 32px; backdrop-filter: blur(18px); box-shadow: 0 24px 80px rgba(0,0,0,.26); }
+.terminalCard, .panel, .step, .riskItem, .techCard, .schemaPanel { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); border: 1px solid var(--line); border-radius: 32px; backdrop-filter: blur(18px); box-shadow: 0 24px 80px rgba(0,0,0,.26); }
 .terminalCard { padding: 24px; transform: rotate(1.5deg); }
 .cardTop { display: flex; justify-content: space-between; color: var(--mint); font-weight: 800; }
 .terminalCard h2 { font-size: 32px; letter-spacing: -.05em; margin: 26px 0 8px; }
@@ -60,7 +60,18 @@ h2 { font-size: clamp(34px, 5vw, 58px); line-height: 1; letter-spacing: -.06em; 
 .step svg { color: var(--green); margin: 20px 0; }
 .num { color: var(--gold); font-weight: 950; }
 .step h3 { font-size: 22px; letter-spacing: -.035em; }
-.step p, .panel p, .riskItem { color: var(--muted); line-height: 1.55; }
+.step p, .panel p, .riskItem, .techCard p { color: var(--muted); line-height: 1.55; }
+.tech { position: relative; }
+.flowLine { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin: 28px 0 22px; }
+.flowLine div { position: relative; min-height: 96px; padding: 14px; border: 1px solid rgba(153,255,208,.18); border-radius: 20px; background: rgba(0,0,0,.2); color: var(--muted); font-size: 13px; line-height: 1.35; }
+.flowLine span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--green), var(--gold)); color: #04120a; font-weight: 950; margin-bottom: 10px; }
+.techGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.techCard { padding: 22px; }
+.techCard svg { color: var(--green); }
+.techCard h3 { font-size: 21px; letter-spacing: -.035em; margin: 18px 0 8px; }
+.schemaPanel { margin-top: 16px; padding: 24px; display: grid; grid-template-columns: .7fr 1.3fr; gap: 22px; align-items: start; background: linear-gradient(135deg, rgba(0,0,0,.34), rgba(67,240,140,.08)); }
+.schemaPanel h3 { font-size: 34px; line-height: 1; letter-spacing: -.055em; margin: 14px 0 0; }
+.schemaPanel code { display: block; white-space: pre-wrap; overflow-x: auto; padding: 20px; border-radius: 22px; background: #031009; border: 1px solid rgba(153,255,208,.14); color: #caffe3; font-size: 13px; line-height: 1.55; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .panel { padding: 28px; }
 .panel.dark { background: linear-gradient(135deg, rgba(67,240,140,.16), rgba(0,0,0,.34)); }
@@ -74,13 +85,14 @@ h2 { font-size: clamp(34px, 5vw, 58px); line-height: 1; letter-spacing: -.06em; 
 .cta span { color: var(--muted); line-height: 1.6; max-width: 760px; display: block; }
 
 @media (max-width: 920px) {
-  .heroGrid, .split, .cta { grid-template-columns: 1fr; display: grid; }
-  .steps, .riskGrid { grid-template-columns: 1fr 1fr; }
+  .heroGrid, .split, .cta, .schemaPanel { grid-template-columns: 1fr; display: grid; }
+  .steps, .riskGrid, .techGrid { grid-template-columns: 1fr 1fr; }
+  .flowLine { grid-template-columns: repeat(3, 1fr); }
   .terminalCard { transform: none; }
 }
 @media (max-width: 560px) {
   .nav { margin-bottom: 42px; }
   .nav a { display: none; }
-  .steps, .riskGrid { grid-template-columns: 1fr; }
-  .terminalCard, .panel, .cta { border-radius: 24px; }
+  .steps, .riskGrid, .techGrid, .flowLine { grid-template-columns: 1fr; }
+  .terminalCard, .panel, .cta, .techCard, .schemaPanel { border-radius: 24px; }
 }

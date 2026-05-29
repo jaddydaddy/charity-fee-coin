@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, BanknoteArrowUp, ChartNoAxesCombined, CircleDollarSign, Coins, ExternalLink, FileCheck2, HandHeart, LockKeyhole, Megaphone, ReceiptText, ShieldCheck, Sparkles, Wallet } from 'lucide-react';
+import { ArrowRight, BadgeCheck, BanknoteArrowUp, ChartNoAxesCombined, CircleDollarSign, Coins, Database, ExternalLink, FileCheck2, HandHeart, LockKeyhole, Megaphone, ReceiptText, Route, ShieldCheck, Sparkles, Wallet, Webhook } from 'lucide-react';
 
 const steps = [
   {
@@ -43,6 +43,48 @@ const receipts = [
   { label: 'GoFundMe donation', value: 'A$2,850', status: 'Receipt pending' },
 ];
 
+const techStack = [
+  {
+    icon: Route,
+    title: 'Fee stream router',
+    text: 'Each launched coin gets a campaign config: treasury wallet, donation split, GoFundMe URL, minimum batch size, and optional growth reserve.',
+  },
+  {
+    icon: Webhook,
+    title: 'Solana indexer',
+    text: 'Helius webhooks or an RPC worker watches fee-wallet deposits, token swaps, treasury movements, and campaign wallet balances in real time.',
+  },
+  {
+    icon: Database,
+    title: 'Campaign database',
+    text: 'Postgres stores campaigns, tx hashes, conversion batches, receipt uploads, approvals, audit logs, and public proof-wall entries.',
+  },
+  {
+    icon: CircleDollarSign,
+    title: 'Conversion batcher',
+    text: 'SOL/USDC is grouped into batches, priced, off-ramped through a verified operator, and reconciled against fiat actually received.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'Receipt verifier',
+    text: 'Admins attach GoFundMe donation evidence. The system links each receipt to the source batch and exposes the delta after fees/spread.',
+  },
+  {
+    icon: LockKeyhole,
+    title: 'Admin approvals',
+    text: 'No blind auto-send at MVP. Multisig or role-based approvals gate fundraiser selection, conversion, donation posting, and receipt publishing.',
+  },
+];
+
+const dataFlow = [
+  'Pump.fun controlled fee stream',
+  'Campaign treasury wallet',
+  'Indexer + database ledger',
+  'Swap/off-ramp batch',
+  'Fiat donation to GoFundMe',
+  'Public proof wall',
+];
+
 export default function Home() {
   return (
     <main>
@@ -61,7 +103,7 @@ export default function Home() {
             </p>
             <div className="actions">
               <a className="primary" href="#flow">See the flow <ArrowRight size={18} /></a>
-              <a className="secondary" href="#risk">Read safeguards</a>
+              <a className="secondary" href="#tech">Tech architecture</a>
             </div>
             <div className="miniStats">
               <div><b>Public</b><span>treasury wallet</span></div>
@@ -94,6 +136,29 @@ export default function Home() {
             const Icon = step.icon;
             return <article key={step.title} className="step"><div className="num">0{index + 1}</div><Icon size={26} /><h3>{step.title}</h3><p>{step.text}</p></article>;
           })}
+        </div>
+      </section>
+
+      <section className="section tech" id="tech">
+        <div className="sectionHead">
+          <p>Technical architecture</p>
+          <h2>The MVP is a fee router plus an audit system.</h2>
+        </div>
+        <div className="flowLine">
+          {dataFlow.map((item, index) => <div key={item}><span>{index + 1}</span>{item}</div>)}
+        </div>
+        <div className="techGrid">
+          {techStack.map((item) => {
+            const Icon = item.icon;
+            return <article key={item.title} className="techCard"><Icon size={24} /><h3>{item.title}</h3><p>{item.text}</p></article>;
+          })}
+        </div>
+        <div className="schemaPanel">
+          <div>
+            <div className="eyebrow"><Database size={16} /> MVP tables</div>
+            <h3>What the backend tracks</h3>
+          </div>
+          <code>{`campaigns\n  id, coin_mint, fundraiser_url, treasury_wallet, split_bps, status\n\nfee_events\n  tx_hash, campaign_id, token, amount, slot, confirmed_at\n\nconversion_batches\n  batch_id, source_tx, crypto_amount, fiat_amount, rate, operator, approved_by\n\ndonation_receipts\n  batch_id, gofundme_url, donated_amount, receipt_url, verified_at`}</code>
         </div>
       </section>
 
